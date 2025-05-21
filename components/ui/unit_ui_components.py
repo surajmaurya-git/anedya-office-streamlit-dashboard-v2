@@ -103,7 +103,7 @@ def gauge_section(node_client=None):
     with container:
 
         indian_time_zone = pytz.timezone("Asia/Kolkata")  # set time zone
-        r1_guage_cols = st.columns([1, 1, 1], gap="small")
+        r1_guage_cols = st.columns([1, 1], gap="small")
 
         with r1_guage_cols[0]:
             VARIABLE = VARIABLES["variable_1"]
@@ -141,9 +141,9 @@ def gauge_section(node_client=None):
                     VARIABLE["name"],
                     cWidth=True,
                     gSize="MED",
-                    sFix="V",
-                    arTop=arTop,
-                    arBot=arBot,
+                    sFix=VARIABLE["unit"],
+                    arTop=int(VARIABLE["top_range"]),
+                    arBot=int(VARIABLE["bottom_range"]),
                 )
             else:
                 st.error("No Data Available")

@@ -70,11 +70,14 @@ def drawLogin():
     }
     st.navigation(pages,position="hidden")
 
-    cols = st.columns([1, 1.2, 1], gap="small")
+    cols = st.columns([1, 1.4, 1], gap="small")
     with cols[0]:
         pass
     with cols[1]:
-            st.title("Dashboard Login", anchor=False)
+            st.title("Anedya Demo Dashboard📊", anchor=False)
+            cols = st.columns([1, 1, 1], gap="small")
+            with cols[1]:
+                st.header("Login", anchor=False)
             username_inp = st.text_input("Email").strip()
             password_inp = st.text_input("Password", type="password").strip()
             submit_button = st.button(label="Submit")
