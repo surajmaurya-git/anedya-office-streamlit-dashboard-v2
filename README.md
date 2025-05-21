@@ -1,4 +1,4 @@
-# anedya-nessa-streamlit-dashboard
+# anedya-office-streamlit-dashboard
 
 ## Project Setup Instructions
 
