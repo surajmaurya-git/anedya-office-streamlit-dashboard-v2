@@ -70,7 +70,7 @@ def drawLogin():
     }
     st.navigation(pages,position="hidden")
 
-    cols = st.columns([1, 1.4, 1], gap="small")
+    cols = st.columns([1, 1.45, 1], gap="small")
     with cols[0]:
         pass
     with cols[1]:
