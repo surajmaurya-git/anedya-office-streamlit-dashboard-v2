@@ -42,7 +42,7 @@ def get_default_time_range():
     # st.session_state.to_time = current_time_object
 
     # Extract the year, month, and day
-    reset_date = current_date - timedelta(hours=3.8)
+    reset_date = current_date - timedelta(hours=0)
     hour = reset_date.hour
     minute = reset_date.minute
     # Create a date object
