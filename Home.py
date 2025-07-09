@@ -82,6 +82,9 @@ def drawLogin():
             password_inp = st.text_input("Password", type="password").strip()
             submit_button = st.button(label="Submit")
             if submit_button:
+                if(username_inp==""):
+                    st.error("Please type a valid email!")
+                    st.stop()
                 check_credentials(username_inp, password_inp)
             
 

@@ -151,18 +151,17 @@ def gauge_section(node_client=None):
 def sync_controllers_state(node_client=None):
 
     res = node_client.get_valueStore(key="Light")
-    if res.get("isSuccess") is True and res.get("value") is not None:
+    if res.get("isSuccess") is True:
         value = res.get("value")
-        
-        if not value:
-            st.session_state.light = "Turn Light On"
-        else:
+        if value:
             st.session_state.light = "Turn Light Off"
+        else:
+            st.session_state.light = "Turn Light On"
 
     res = node_client.get_valueStore(key="Fan")
-    if res.get("isSuccess") is True and res.get("value") is not None:
+    if res.get("isSuccess") is True:
         value = res.get("value")
-        if not value:
+        if value:
             st.session_state.fan = "Turn Fan Off"
         else:
             st.session_state.fan = "Turn Fan On"
@@ -177,33 +176,36 @@ def controllers_section(node_client=None):
     container = st.container(border=True)
     with container:
         st.subheader(body="Controllers", anchor=False)
-        if int(time.time() - st.session_state.sync_interval) > 4:
+        if (int(time.time() - st.session_state.sync_interval) > 4) or (st.session_state.light== ""):
             sync_controllers_state(node_client=node_client)
         r1_cols = st.columns([1, 1, 1, 1], gap="small")
         with r1_cols[0]:
             st.subheader("Light")
+            print(st.session_state.light)
             state = st.button(st.session_state.light, key="light_toggle")
             if state:
                 if st.session_state.light == "Turn Light On":
+                    print("check-1")
                     st.session_state.light = "Turn Light Off"
-                    node_client.send_command(command="Light", data="on", type="string")
+                    node_client.send_command(command="Light", data="ON", type="string")
                     node_client.set_valueStore(key="Light", value=True, type="boolean")
                 else:
                     st.session_state.light = "Turn Light On"
-                    node_client.send_command(command="Light", data="off", type="string")
+                    node_client.send_command(command="Light", data="OFF", type="string")
                     node_client.set_valueStore(key="Light", value=False, type="boolean")
                 st.rerun()
         with r1_cols[1]:
             st.subheader("Fan")
+            print(st.session_state.fan)
             state = st.button(st.session_state.fan, key="fan_toggle")
             if state:
                 if st.session_state.fan == "Turn Fan On":
                     st.session_state.fan = "Turn Fan Off"
-                    node_client.send_command(command="fan", data="on", type="string")
+                    node_client.send_command(command="fan", data="ON", type="string")
                     node_client.set_valueStore(key="Fan", value=True, type="boolean")
                 else:
                     st.session_state.fan = "Turn Fan On"
-                    node_client.send_command(command="fan", data="off", type="string")
+                    node_client.send_command(command="fan", data="OFF", type="string")
                     node_client.set_valueStore(key="Fan", value=False, type="boolean")
                 st.rerun()
 
@@ -345,23 +347,20 @@ def graph_section(node_client=None):
         if not options:
             st.error("No variables available")
             st.stop()
-        default_options=options[0]
-        if len(options)<=7:
-            default_options=options[0]
+            
         multislect_cols = st.columns([3.5,1,0.5], gap="medium",vertical_alignment="bottom")
         with multislect_cols[0]:
             show_charts = st.multiselect(
                 "Show Charts",
                 placeholder="Show Charts",
-                default=default_options,
                 options=options,
+                default=st.session_state.show_charts,
                 label_visibility="hidden",
                 on_change=change_callback,
             )
-            if len(show_charts) > 0 or is_options_changed:
-                is_options_changed = False
-                if show_charts != st.session_state.show_charts:
-                    st.session_state.show_charts = show_charts
+            if(st.session_state.show_charts != show_charts):
+                st.session_state.show_charts = show_charts
+                st.rerun()
             
         with multislect_cols[1]:
             pass
@@ -404,8 +403,8 @@ def graph_section(node_client=None):
                                 chart_title=chart,
                                 chart_data=data,
                                 y_axis_title=VARIABLE.get("unit"),
-                                bottomRange=minData,
-                                topRange=maxData,
+                                topRange=(maxData + maxData * 0.1),
+                                bottomRange=(minData- minData * 0.1),
                                 agg=agg_interval,
                                 aggregate_or_value=aggregate_or_value
                             )

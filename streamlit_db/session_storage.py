@@ -44,10 +44,10 @@ def initialize_session_state():
          st.session_state.door= "Open Door"
 
     if "light" not in st.session_state:
-         st.session_state.light= "Turn Light On"
+         st.session_state.light= ""
 
     if "fan" not in st.session_state:
-         st.session_state.fan= "Turn Fan On"
+         st.session_state.fan= ""
 
     if "sync_interval" not in st.session_state:
          st.session_state.sync_interval= 0
@@ -55,7 +55,7 @@ def initialize_session_state():
 
     # ======== UI controller ======================
     if "show_charts" not in st.session_state:
-        st.session_state.show_charts = []
+        st.session_state.show_charts = ["Temperature"]
 
     # ======== Time Range controller ================
     default_time_range=[]
