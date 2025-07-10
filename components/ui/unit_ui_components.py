@@ -390,8 +390,8 @@ def graph_section(node_client=None):
                                 agg_interval_mins=agg_interval,
                             )
                             aggregate_or_value="aggregate"
-                        minData=None
-                        maxData=None
+                        minData=0
+                        maxData=0
                         if not data.empty:
                             minData=data[aggregate_or_value].min()
                             maxData=data[aggregate_or_value].max()
