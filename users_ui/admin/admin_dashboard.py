@@ -43,7 +43,7 @@ def drawAdminDashboard():
         ],
     }
     pg = st.navigation(pages)
-    # st.logo(f"{current_dir}/images/logo.png", size="large")
+    st.logo(f"{current_dir}/images/logo.png", size="large")
     DASHBOARD_NAME=st.secrets["DASHBOARD_NAME"]
     st.sidebar.subheader(DASHBOARD_NAME)
     ABOUT_DASHBOARD=st.secrets["ABOUT_DASHBOARD"]
