@@ -33,7 +33,61 @@ def unit_header(title, des=None, node_client=None, device_status_res=None):
                 device_status = "Offline"
         else:
             device_status = "..."
-        st.button(device_status, disabled=True, use_container_width=True)
+        with st.container(border=False, height=40):
+            if device_status == "Online":
+                st.markdown(
+                    f"""
+                    <div style="
+                        margin-top: 0px;
+                        height: 38px;
+                        margin-right: 0px;
+                        padding-top: 0;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        font-size: 16px;
+                        line-height: 25px;
+                        color: white;
+                        font-weight: 600;
+                        background-color: green;
+                        border-radius: 6px;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                        display: flex;
+                    ">
+                        {device_status}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
+            else:
+                st.markdown(
+                    f"""
+                    <div style="
+                        margin-top: 0px;
+                        height: 38px;
+                        margin-right: 0px;
+                        padding-top: 0;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        font-size: 16px;
+                        line-height: 25px;
+                        color: white;
+                        font-weight: 600;
+                        background-color: red;
+                        border-radius: 6px;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                        display: flex;
+                    ">
+                        {device_status}
+                    </div>
+                    """,
+                    unsafe_allow_html=True
+                )
     with headercols[2]:
         on = st.button("Refresh")
         if on:
@@ -98,7 +152,7 @@ def cards_section(data: dict = None):
 
 
 def gauge_section(node_client=None):
-    container = st.container(border=True, height=300)
+    container = st.container(border=True, height=350)
     VARIABLES = st.session_state.variables
     with container:
 
